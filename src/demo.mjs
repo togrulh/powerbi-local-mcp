@@ -64,7 +64,7 @@ export async function createDemo(root) {
     const ref = name => ({ table: 'Sales', name });
     return addDashboard(pages, { $schema: schema + 'definition/pagesMetadata/1.0.0/schema.json', pageOrder: [] }, {
       page: 'Retail sales overview', cards: ['Revenue', 'Orders', 'Average order value'].map(ref),
-      category: ref('Month'), value: ref('Revenue'), slicer: ref('Channel'), chart: 'line',
+      category: ref('Month'), value: ref('Revenue'), slicer: ref('Channel'), chart: 'line', retailOverview: true,
     }, writeJson);
   });
 }

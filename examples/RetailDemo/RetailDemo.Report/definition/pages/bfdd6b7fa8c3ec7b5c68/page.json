@@ -1,8 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
-  "name": "bfdd6b7fa8c3ec7b5c68",
-  "displayName": "Retail sales overview",
-  "displayOption": "FitToPage",
-  "width": 1280,
-  "height": 720
-}

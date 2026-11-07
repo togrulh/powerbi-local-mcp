@@ -4,6 +4,12 @@ Describe a dashboard in plain language. An MCP client uses this local server to 
 
 ## Try the retail demo
 
+The retail template combines three KPI cards, a monthly revenue trend, and a channel comparison. The channel filter updates the whole page.
+
+![Retail sales overview with all channels selected](docs/images/retail-overview.png)
+
+[View the Online-only screenshot](docs/images/retail-online.png). Selecting **Online** changes revenue to **114,312** and orders to **2,622**.
+
 Open [RetailDemo.pbip](examples/RetailDemo/RetailDemo.pbip) in a recent Power BI Desktop. On the first open, choose **Home > Refresh** to load the embedded sample. No database, account, or credentials are needed. The 36 fictional rows cover 12 months and three sales channels. The expected totals are **399,426 revenue**, **9,126 orders**, and **43.77 average order value**.
 
 For the full MCP workflow, install Node.js 22 or newer, then run these commands from the repository:

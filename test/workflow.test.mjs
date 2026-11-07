@@ -39,7 +39,15 @@ test('demo and authored copy contain validated visuals and an unchanged model', 
   const before = readFileSync(inputModel);
   const original = inspect(root, design.source);
   assert.equal(original.pages.length, 1);
-  assert.equal(original.pages[0].visuals.length, 5);
+  assert.deepEqual(original.pages[0].visuals.map(v => v.type),
+    ['textbox', 'card', 'card', 'card', 'lineChart', 'slicer', 'barChart']);
+  assert.deepEqual(original.pages[0].visuals.at(-1).fields, ['Sales.Channel', 'Sales.Revenue']);
+  const boxes = original.pages[0].visuals.map(v => v.position);
+  for (const [i, a] of boxes.entries()) {
+    assert.ok(a.x >= 0 && a.y >= 0 && a.x + a.width <= 1280 && a.y + a.height <= 720);
+    assert.ok(boxes.slice(i + 1).every(b =>
+      a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y));
+  }
   assert.deepEqual(original.tables[0].measures, ['Revenue', 'Orders', 'Average order value']);
   await authorDashboard(root, design);
   assert.deepEqual(readFileSync(inputModel), before);
@@ -96,16 +104,17 @@ test('layout editing preserves visual bindings and rejects overlapping positions
   const root = workspace(t);
   await createDemo(root);
   const page = inspect(root, 'RetailDemo').pages[0];
-  const [card, other] = page.visuals;
+  const [card, other] = page.visuals.filter(v => v.type === 'card');
   const { x, y, width, height } = other.position;
   const command = { source: 'RetailDemo', name: 'LayoutReview', pageId: page.id };
   await assert.rejects(editLayout(root, { ...command, changes: [{ id: card.id, position: { x, y, width, height } }] }),
     /overlap/);
+  const p = card.position;
   await editLayout(root, { ...command, changes: [{ id: card.id, title: "Today's revenue",
-    position: { x: 25, y: 24, width: 399, height: 128 } }] });
-  const updated = inspect(root, command.name).pages[0].visuals[0];
+    position: { x: p.x + 1, y: p.y, width: p.width - 1, height: p.height } }] });
+  const updated = inspect(root, command.name).pages[0].visuals.find(v => v.id === card.id);
   assert.equal(updated.title, "Today's revenue");
-  assert.equal(updated.position.x, 25);
+  assert.equal(updated.position.x, p.x + 1);
   assert.deepEqual(updated.fields, card.fields);
   assert.deepEqual(inspect(root, 'RetailDemo').pages[0], page);
 });
