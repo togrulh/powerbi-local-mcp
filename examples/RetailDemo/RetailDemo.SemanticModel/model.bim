@@ -1,0 +1,105 @@
+{
+  "name": "RetailDemo",
+  "compatibilityLevel": 1604,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "tables": [
+      {
+        "name": "Sales",
+        "columns": [
+          {
+            "name": "Month",
+            "dataType": "string",
+            "sourceColumn": "Month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Channel",
+            "dataType": "string",
+            "sourceColumn": "Channel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "OrderCount",
+            "dataType": "int64",
+            "sourceColumn": "OrderCount",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RevenueAmount",
+            "dataType": "int64",
+            "sourceColumn": "RevenueAmount",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Revenue",
+            "expression": "SUM(Sales[RevenueAmount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Orders",
+            "expression": "SUM(Sales[OrderCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Average order value",
+            "expression": "DIVIDE([Revenue], [Orders])",
+            "formatString": "#,0.00"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Sales",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "#table(type table [Month = text, Channel = text, OrderCount = Int64.Type, RevenueAmount = Int64.Type], {",
+                "    {\"2025-01\", \"Online\", 118, 4956},",
+                "    {\"2025-01\", \"Store\", 153, 5814},",
+                "    {\"2025-01\", \"Partner\", 188, 8648},",
+                "    {\"2025-02\", \"Online\", 142, 6106},",
+                "    {\"2025-02\", \"Store\", 177, 6903},",
+                "    {\"2025-02\", \"Partner\", 212, 9964},",
+                "    {\"2025-03\", \"Online\", 166, 7304},",
+                "    {\"2025-03\", \"Store\", 201, 8040},",
+                "    {\"2025-03\", \"Partner\", 236, 11328},",
+                "    {\"2025-04\", \"Online\", 169, 7605},",
+                "    {\"2025-04\", \"Store\", 204, 8364},",
+                "    {\"2025-04\", \"Partner\", 239, 11711},",
+                "    {\"2025-05\", \"Online\", 193, 8106},",
+                "    {\"2025-05\", \"Store\", 228, 8664},",
+                "    {\"2025-05\", \"Partner\", 263, 12098},",
+                "    {\"2025-06\", \"Online\", 217, 9331},",
+                "    {\"2025-06\", \"Store\", 252, 9828},",
+                "    {\"2025-06\", \"Partner\", 287, 13489},",
+                "    {\"2025-07\", \"Online\", 220, 9680},",
+                "    {\"2025-07\", \"Store\", 255, 10200},",
+                "    {\"2025-07\", \"Partner\", 290, 13920},",
+                "    {\"2025-08\", \"Online\", 244, 10980},",
+                "    {\"2025-08\", \"Store\", 279, 11439},",
+                "    {\"2025-08\", \"Partner\", 314, 15386},",
+                "    {\"2025-09\", \"Online\", 268, 11256},",
+                "    {\"2025-09\", \"Store\", 303, 11514},",
+                "    {\"2025-09\", \"Partner\", 338, 15548},",
+                "    {\"2025-10\", \"Online\", 271, 11653},",
+                "    {\"2025-10\", \"Store\", 306, 11934},",
+                "    {\"2025-10\", \"Partner\", 341, 16027},",
+                "    {\"2025-11\", \"Online\", 295, 12980},",
+                "    {\"2025-11\", \"Store\", 330, 13200},",
+                "    {\"2025-11\", \"Partner\", 365, 17520},",
+                "    {\"2025-12\", \"Online\", 319, 14355},",
+                "    {\"2025-12\", \"Store\", 354, 14514},",
+                "    {\"2025-12\", \"Partner\", 389, 19061}",
+                "})"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

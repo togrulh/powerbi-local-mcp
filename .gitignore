@@ -1,0 +1,9 @@
+node_modules/
+workspace/
+.pbi/
+*.pbix
+*.abf
+*.log
+.env*
+.mcp-stage-*/
+.mcp-lock-*/
