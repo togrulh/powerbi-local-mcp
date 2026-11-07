@@ -39,11 +39,11 @@ Running the same prompt again? Choose a different output name. The server will n
 
 ## Try the retail demo
 
-The retail dashboard fits on one page: revenue, orders, average order value, and Q4 versus Q3 revenue growth sit above the monthly trend and ranked channel comparison. The dropdown in the header filters all six visuals.
+The retail dashboard fits on one page. Four KPIs sit above a monthly revenue trend, a donut chart showing the share of revenue by sales channel, and a quarterly revenue comparison. The dropdown in the header updates all three charts and all four KPIs.
 
 ![Retail performance dashboard with all channels selected](docs/images/retail-overview.png)
 
-[View the Online-only screenshot](docs/images/retail-online.png). Selecting **Online** changes revenue to **114,312**, orders to **2,622**, and quarterly revenue growth to **+22.2%**.
+[View the Online-only screenshot](docs/images/retail-online.png). Selecting **Online** changes revenue to **114,312**, orders to **2,622**, and Q4 versus Q3 revenue growth to **+22.2%**. The donut shows the share of revenue within the selected channels.
 
 Open [RetailDemo.pbip](examples/RetailDemo/RetailDemo.pbip) in a recent Power BI Desktop. On the first open, choose **Home > Refresh** to load the embedded sample. No database, account, or credentials are needed. The 36 fictional rows cover 12 months and three sales channels. With all channels selected, the dashboard shows **399,426 revenue**, **9,126 orders**, **43.77 average order value**, and **+19.4% Q4 versus Q3 revenue growth**.
 

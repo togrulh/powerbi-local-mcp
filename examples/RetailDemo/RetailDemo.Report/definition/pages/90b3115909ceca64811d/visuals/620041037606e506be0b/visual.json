@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "2d44e82b2d69625a8488",
+  "name": "620041037606e506be0b",
   "position": {
-    "x": 648,
+    "x": 20,
     "y": 120,
     "width": 298,
     "height": 102,
-    "z": 5,
-    "tabOrder": 5
+    "z": 3,
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Sales"
                     }
                   },
-                  "Property": "Average order value"
+                  "Property": "Revenue"
                 }
               },
-              "queryRef": "Sales.Average order value",
-              "nativeQueryRef": "Average order value",
+              "queryRef": "Sales.Revenue",
+              "nativeQueryRef": "Revenue",
               "active": true
             }
           ]
@@ -151,7 +151,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Average order value'"
+                  "Value": "'Revenue'"
                 }
               }
             },

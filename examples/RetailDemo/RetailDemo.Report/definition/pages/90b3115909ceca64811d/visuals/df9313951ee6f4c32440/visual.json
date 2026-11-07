@@ -1,19 +1,38 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "5e372885b6bee485a5cb",
+  "name": "df9313951ee6f4c32440",
   "position": {
-    "x": 962,
-    "y": 120,
-    "width": 298,
-    "height": 102,
-    "z": 6,
-    "tabOrder": 6
+    "x": 944,
+    "y": 238,
+    "width": 316,
+    "height": 342,
+    "z": 9,
+    "tabOrder": 9
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "columnChart",
     "query": {
       "queryState": {
-        "Values": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sales"
+                    }
+                  },
+                  "Property": "Quarter"
+                }
+              },
+              "queryRef": "Sales.Quarter",
+              "nativeQueryRef": "Quarter",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
           "projections": [
             {
               "field": {
@@ -23,15 +42,33 @@
                       "Entity": "Sales"
                     }
                   },
-                  "Property": "Q4 vs Q3 revenue"
+                  "Property": "Revenue"
                 }
               },
-              "queryRef": "Sales.Q4 vs Q3 revenue",
-              "nativeQueryRef": "Q4 vs Q3 revenue",
+              "queryRef": "Sales.Revenue",
+              "nativeQueryRef": "Revenue",
               "active": true
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Sales"
+                  }
+                },
+                "Property": "Quarter"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
@@ -151,7 +188,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Q4 vs Q3 revenue'"
+                  "Value": "'Quarterly revenue'"
                 }
               }
             },
@@ -206,24 +243,83 @@
       ]
     },
     "objects": {
-      "labels": [
+      "categoryAxis": [
         {
           "properties": {
-            "fontFamily": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
+                  "Value": "false"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "32D"
+                  "Value": "10D"
                 }
               }
             },
-            "color": {
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4C626A'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4C626A'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D3E0DD'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "defaultColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -233,24 +329,49 @@
                   }
                 }
               }
-            },
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
             }
           }
         }
       ],
-      "categoryLabels": [
+      "labels": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'OutsideEnd'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#18282D'"
+                    }
+                  }
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             }

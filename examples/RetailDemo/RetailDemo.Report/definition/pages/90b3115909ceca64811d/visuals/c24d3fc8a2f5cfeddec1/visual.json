@@ -1,38 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "af0eb6676662b48db374",
+  "name": "c24d3fc8a2f5cfeddec1",
   "position": {
-    "x": 20,
-    "y": 238,
-    "width": 778,
-    "height": 342,
-    "z": 7,
-    "tabOrder": 7
+    "x": 334,
+    "y": 120,
+    "width": 298,
+    "height": 102,
+    "z": 4,
+    "tabOrder": 4
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "card",
     "query": {
       "queryState": {
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Sales"
-                    }
-                  },
-                  "Property": "Month"
-                }
-              },
-              "queryRef": "Sales.Month",
-              "nativeQueryRef": "Month",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -42,33 +23,15 @@
                       "Entity": "Sales"
                     }
                   },
-                  "Property": "Revenue"
+                  "Property": "Orders"
                 }
               },
-              "queryRef": "Sales.Revenue",
-              "nativeQueryRef": "Revenue",
+              "queryRef": "Sales.Orders",
+              "nativeQueryRef": "Orders",
               "active": true
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Sales"
-                  }
-                },
-                "Property": "Month"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
@@ -188,7 +151,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Monthly revenue'"
+                  "Value": "'Orders'"
                 }
               }
             },
@@ -243,83 +206,24 @@
       ]
     },
     "objects": {
-      "categoryAxis": [
+      "labels": [
         {
           "properties": {
-            "showAxisTitle": {
+            "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Segoe UI Semibold'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "32D"
                 }
               }
             },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4C626A'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4C626A'"
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D3E0DD'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "defaultColor": {
+            "color": {
               "solid": {
                 "color": {
                   "expr": {
@@ -329,31 +233,24 @@
                   }
                 }
               }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
             }
           }
         }
       ],
-      "lineStyles": [
+      "categoryLabels": [
         {
           "properties": {
-            "strokeWidth": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "markerSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "5D"
+                  "Value": "false"
                 }
               }
             }

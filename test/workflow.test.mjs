@@ -30,12 +30,14 @@ test('synthetic sales reconcile at the month, channel and annual levels', () => 
     ['2025-01', 'Online', 118, 4956], ['2025-01', 'Store', 153, 5814], ['2025-01', 'Partner', 188, 8648],
   ]);
   assert.deepEqual(rows.reduce(([o, r], row) => [o + row[2], r + row[3]], [0, 0]), [9126, 399426]);
-  const quarters = channel => ['2025-07', '2025-10'].map(start => rows
-    .filter(([month, source]) => (!channel || source === channel) && month >= start &&
-      Number(month.slice(-2)) < Number(start.slice(-2)) + 3)
+  const quarters = channel => [1, 2, 3, 4].map(quarter => rows
+    .filter(([month, source]) => (!channel || source === channel) && Math.ceil(Number(month.slice(-2)) / 3) === quarter)
     .reduce((sum, row) => sum + row[3], 0));
-  assert.deepEqual(quarters(), [109923, 131244]);
-  assert.deepEqual(quarters('Online'), [31916, 38988]);
+  assert.deepEqual(quarters(), [69063, 89196, 109923, 131244]);
+  assert.deepEqual(quarters('Online'), [18366, 25042, 31916, 38988]);
+  const channelShares = ['Partner', 'Store', 'Online'].map(channel =>
+    +(quarters(channel).reduce((sum, total) => sum + total, 0) / 399426 * 100).toFixed(1));
+  assert.deepEqual(channelShares, [41.2, 30.1, 28.6]);
 });
 
 test('demo and authored copy contain validated visuals and an unchanged model', async t => {
@@ -46,10 +48,12 @@ test('demo and authored copy contain validated visuals and an unchanged model', 
   const original = inspect(root, design.source);
   assert.equal(original.pages.length, 1);
   assert.deepEqual(original.pages[0].visuals.map(v => v.type),
-    ['textbox', 'slicer', 'card', 'card', 'card', 'card', 'lineChart', 'barChart']);
+    ['textbox', 'slicer', 'card', 'card', 'card', 'card', 'lineChart', 'donutChart', 'columnChart']);
   assert.deepEqual(original.pages[0].visuals[5].fields, ['Sales.Q4 vs Q3 revenue']);
   assert.equal(original.pages[0].visuals[1].position.y, original.pages[0].visuals[0].position.y);
-  assert.deepEqual(original.pages[0].visuals.at(-1).fields, ['Sales.Channel', 'Sales.Revenue']);
+  assert.deepEqual(original.pages[0].visuals.slice(-3).map(v => v.fields), [
+    ['Sales.Month label', 'Sales.Revenue'], ['Sales.Channel', 'Sales.Revenue'], ['Sales.Quarter', 'Sales.Revenue'],
+  ]);
   const boxes = original.pages[0].visuals.map(v => v.position);
   for (const [i, a] of boxes.entries()) {
     assert.ok(a.x >= 0 && a.y >= 0 && a.x + a.width <= 1280 && a.y + a.height <= 600);

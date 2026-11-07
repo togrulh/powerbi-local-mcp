@@ -31,6 +31,21 @@
             "dataType": "int64",
             "sourceColumn": "RevenueAmount",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Month label",
+            "type": "calculated",
+            "dataType": "string",
+            "summarizeBy": "none",
+            "sortByColumn": "Month",
+            "expression": "FORMAT(DATE(2000, VALUE(RIGHT(Sales[Month], 2)), 1), \"mmm\", \"en-US\")"
+          },
+          {
+            "name": "Quarter",
+            "type": "calculated",
+            "dataType": "string",
+            "summarizeBy": "none",
+            "expression": "\"Q\" & ROUNDUP(VALUE(RIGHT(Sales[Month], 2)) / 3, 0)"
           }
         ],
         "measures": [

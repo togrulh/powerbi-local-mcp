@@ -16,6 +16,11 @@ export function salesRows() {
 function retailModel() {
   const columns = [['Month', 'string'], ['Channel', 'string'], ['OrderCount', 'int64'], ['RevenueAmount', 'int64']]
     .map(([name, dataType]) => ({ name, dataType, sourceColumn: name, summarizeBy: 'none' }));
+  columns.push({ name: 'Month label', type: 'calculated', dataType: 'string', summarizeBy: 'none',
+    sortByColumn: 'Month', expression: 'FORMAT(DATE(2000, VALUE(RIGHT(Sales[Month], 2)), 1), "mmm", "en-US")' }, {
+    name: 'Quarter', type: 'calculated', dataType: 'string', summarizeBy: 'none',
+    expression: '"Q" & ROUNDUP(VALUE(RIGHT(Sales[Month], 2)) / 3, 0)',
+  });
   const measures = [
     { name: 'Revenue', expression: 'SUM(Sales[RevenueAmount])', formatString: '#,0' },
     { name: 'Orders', expression: 'SUM(Sales[OrderCount])', formatString: '#,0' },
@@ -69,7 +74,8 @@ export async function createDemo(root) {
     const ref = name => ({ table: 'Sales', name });
     return addDashboard(pages, { $schema: schema + 'definition/pagesMetadata/1.0.0/schema.json', pageOrder: [] }, {
       page: 'Retail performance', cards: ['Revenue', 'Orders', 'Average order value', 'Q4 vs Q3 revenue'].map(ref),
-      category: ref('Month'), value: ref('Revenue'), slicer: ref('Channel'), chart: 'line', retailOverview: true,
+      category: ref('Month label'), value: ref('Revenue'), slicer: ref('Channel'), chart: 'line',
+      retailOverview: { quarter: ref('Quarter') },
     }, writeJson);
   });
 }

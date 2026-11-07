@@ -13,7 +13,7 @@ const fill = hex => ({ solid: { color: atom(hex) } });
 const props = values => [{ properties: Object.fromEntries(Object.entries(values)
   .map(([key, value]) => [key, typeof value === 'object' ? value : atom(value)])) }];
 const palette = { ink: '#18282D', muted: '#4C626A', page: '#EFF4F3', border: '#D3E0DD',
-  white: '#FFFFFF', accent: '#087F73', blue: '#4F6595', light: '#C3DAD7' };
+  white: '#FFFFFF', accent: '#087F73', blue: '#4F6595', copper: '#A34F31', light: '#C3DAD7' };
 const font = 'Segoe UI';
 
 function style(visual, item) {
@@ -41,6 +41,17 @@ function style(visual, item) {
     if (item.dropdown) objects.data = props({ mode: 'Dropdown' });
     objects.header = props({ show: false });
     objects.items = props({ fontFamily: font, textSize: 11, fontColor: fill(palette.ink) });
+  } else if (item.type === 'donutChart') {
+    objects.labels = props({ show: true, fontSize: 12, color: fill(palette.ink),
+      labelStyle: 'Percent of total', position: 'outside', percentageLabelPrecision: 1 });
+    objects.legend = props({ show: true, showTitle: false, position: 'BottomCenter', fontSize: 11,
+      labelColor: fill(palette.ink) });
+    objects.dataPoint = Object.entries(item.colors).map(([channel, color]) => ({
+      ...props({ fill: fill(color) })[0],
+      selector: { data: [{ scopeId: { Comparison: {
+        ComparisonKind: 0, Left: item.roles.Category[0].field, Right: { Literal: { Value: quote(channel) } },
+      } } }] },
+    }));
   } else {
     const axis = { showAxisTitle: false, fontSize: 10, labelColor: fill(palette.muted) };
     objects.categoryAxis = props(axis);
@@ -102,15 +113,20 @@ export function addDashboard(pages, metadata, design, write) {
   visuals.push({
     type: design.chart === 'bar' ? 'barChart' : 'lineChart',
     title: retail ? 'Monthly revenue' : design.value.name + ' by ' + design.category.name,
-    rect: retail ? [20, 238, 778, 342] : [24, 172, 932, 524],
+    rect: retail ? [20, 238, 548, 342] : [24, 172, 932, 524],
     roles: { Category: [binding(design.category, 'Column')], Y: [binding(design.value, 'Measure')] },
     sort: design.chart === 'line' ? { field: binding(design.category, 'Column').field, direction: 'Ascending' } : undefined,
   });
   if (!retail) visuals.push(slicer);
   if (retail) visuals.push({
-    type: 'barChart', title: 'Revenue by channel', rect: [814, 238, 446, 342], exactLabels: true,
+    type: 'donutChart', title: 'Revenue mix', rect: [584, 238, 344, 342],
     roles: { Category: [binding(design.slicer, 'Column')], Y: [binding(design.value, 'Measure')] },
     sort: { field: binding(design.value, 'Measure').field, direction: 'Descending' },
+    colors: { Partner: palette.accent, Store: palette.blue, Online: palette.copper },
+  }, {
+    type: 'columnChart', title: 'Quarterly revenue', rect: [944, 238, 316, 342], exactLabels: true,
+    roles: { Category: [binding(design.retailOverview.quarter, 'Column')], Y: [binding(design.value, 'Measure')] },
+    sort: { field: binding(design.retailOverview.quarter, 'Column').field, direction: 'Ascending' },
   });
   const ids = [];
   for (const [index, item] of visuals.entries()) {

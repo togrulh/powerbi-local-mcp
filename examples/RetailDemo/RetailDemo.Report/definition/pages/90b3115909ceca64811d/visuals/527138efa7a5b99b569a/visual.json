@@ -1,33 +1,33 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "a375ed887cd8f6b318ad",
+  "name": "527138efa7a5b99b569a",
   "position": {
-    "x": 334,
-    "y": 120,
-    "width": 298,
-    "height": 102,
-    "z": 4,
-    "tabOrder": 4
+    "x": 974,
+    "y": 20,
+    "width": 286,
+    "height": 84,
+    "z": 2,
+    "tabOrder": 2
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "slicer",
     "query": {
       "queryState": {
         "Values": {
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
                       "Entity": "Sales"
                     }
                   },
-                  "Property": "Orders"
+                  "Property": "Channel"
                 }
               },
-              "queryRef": "Sales.Orders",
-              "nativeQueryRef": "Orders",
+              "queryRef": "Sales.Channel",
+              "nativeQueryRef": "Channel",
               "active": true
             }
           ]
@@ -151,7 +151,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Orders'"
+                  "Value": "'Sales channel'"
                 }
               }
             },
@@ -206,51 +206,57 @@
       ]
     },
     "objects": {
-      "labels": [
+      "data": [
         {
           "properties": {
-            "fontFamily": {
+            "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "32D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#087F73'"
-                    }
-                  }
-                }
-              }
-            },
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
+                  "Value": "'Dropdown'"
                 }
               }
             }
           }
         }
       ],
-      "categoryLabels": [
+      "header": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#18282D'"
+                    }
+                  }
                 }
               }
             }
