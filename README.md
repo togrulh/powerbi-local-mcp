@@ -2,6 +2,41 @@
 
 Describe a dashboard in plain language. An MCP client uses this local server to bind existing measures and columns to Power BI visuals. The server creates a validated **new project copy** without opening Power BI Desktop or changing the source.
 
+## Quick start: Build a dashboard with Codex
+
+These steps use Windows PowerShell. You need **Git**, **Node.js 22 or newer**, and the **Codex CLI** on your PATH. Power BI Desktop is only needed to open and interact with the finished report.
+
+### 1. Install and create the sample project
+
+```powershell
+git clone https://github.com/togrulh/powerbi-local-mcp.git
+cd powerbi-local-mcp
+npm.cmd ci
+npm.cmd run demo
+```
+
+This creates `workspace/RetailDemo/RetailDemo.pbip` with embedded synthetic data. No database connection or credentials are required for the demo.
+
+### 2. Connect the MCP server to Codex
+
+Run this from the same repository folder:
+
+```powershell
+$repo = (Get-Location).Path
+codex mcp add powerbi-local --env "POWERBI_MCP_ROOT=$repo/workspace" -- node "$repo/src/server.mjs"
+codex mcp list
+```
+
+When `powerbi-local` appears in the list, start a new Codex session so it loads the server. Codex starts the server when needed; there is no separate service to launch.
+
+### 3. Ask Codex to build a dashboard
+
+> Use the powerbi-local MCP server to inspect RetailDemo. Create a new project called SalesReview with Revenue, Orders, and Average order value KPI cards, a monthly Revenue line chart, and a Channel slicer. Validate the result and give me the path to the new .pbip file.
+
+Open `workspace/SalesReview/SalesReview.pbip` in Power BI Desktop. On the first open, select **Home > Refresh** to load the sample data. Try selecting **Online** in the Channel slicer. The original `RetailDemo` project stays unchanged.
+
+Running the same prompt again? Choose a different output name. The server will not overwrite an existing project.
+
 ## Try the retail demo
 
 The retail template combines three KPI cards, a monthly revenue trend, and a channel comparison. The channel filter updates the whole page.
@@ -12,17 +47,7 @@ The retail template combines three KPI cards, a monthly revenue trend, and a cha
 
 Open [RetailDemo.pbip](examples/RetailDemo/RetailDemo.pbip) in a recent Power BI Desktop. On the first open, choose **Home > Refresh** to load the embedded sample. No database, account, or credentials are needed. The 36 fictional rows cover 12 months and three sales channels. The expected totals are **399,426 revenue**, **9,126 orders**, and **43.77 average order value**.
 
-For the full MCP workflow, install Node.js 22 or newer, then run these commands from the repository:
-
-```sh
-npm ci
-npm test
-npm run demo
-```
-
-The last command creates `workspace/RetailDemo/RetailDemo.pbip`. Alternatively, call `create_retail_demo` after connecting an MCP client. Both refuse to overwrite an existing demo.
-
-## Connect an MCP client
+## Connect another MCP client
 
 Configure a local **stdio** server in your MCP-capable client. For clients that use an `mcpServers` JSON file:
 
@@ -40,9 +65,7 @@ Configure a local **stdio** server in your MCP-capable client. For clients that 
 
 Use absolute paths for both values. The server does not listen on a port. The client interprets plain language; the server runs the structured actions.
 
-> Inspect RetailDemo. Make a new project named SalesReview with Revenue, Orders and Average order value cards, a monthly Revenue line chart and a Channel filter.
-
-The client calls `inspect_project`, then `create_dashboard`, and can call `validate_report` on the result. To adjust an existing layout, use `edit_layout` to change visual titles, sizes or positions in a separate copy. Open `SalesReview/SalesReview.pbip` in Desktop to view it.
+Use the same prompt as in the Codex quick start. The client calls `inspect_project`, then `create_dashboard`, and can call `validate_report` on the result. To adjust an existing layout, use `edit_layout` to change visual titles, sizes or positions in a separate copy.
 
 ## Bring your own report
 
