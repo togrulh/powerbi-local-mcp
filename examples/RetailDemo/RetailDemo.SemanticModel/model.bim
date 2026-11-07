@@ -48,6 +48,15 @@
             "name": "Average order value",
             "expression": "DIVIDE([Revenue], [Orders])",
             "formatString": "#,0.00"
+          },
+          {
+            "name": "Q4 vs Q3 revenue",
+            "formatString": "+0.0%;-0.0%;0.0%",
+            "expression": [
+              "VAR Q3Revenue = CALCULATE([Revenue], Sales[Month] IN {\"2025-07\", \"2025-08\", \"2025-09\"})",
+              "VAR Q4Revenue = CALCULATE([Revenue], Sales[Month] IN {\"2025-10\", \"2025-11\", \"2025-12\"})",
+              "RETURN DIVIDE(Q4Revenue - Q3Revenue, Q3Revenue)"
+            ]
           }
         ],
         "partitions": [

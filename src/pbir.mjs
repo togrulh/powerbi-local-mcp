@@ -34,9 +34,11 @@ function style(visual, item) {
   container.title = props({ show: true, text: item.title, fontFamily: font, fontSize: 14,
     bold: true, fontColor: fill(palette.ink), heading: 'Heading2', titleWrap: true });
   if (item.type === 'card') {
-    objects.labels = props({ fontFamily: 'Segoe UI Semibold', fontSize: 32, color: fill(palette.accent), labelDisplayUnits: 1 });
+    objects.labels = props({ fontFamily: 'Segoe UI Semibold', fontSize: 32,
+      color: fill(item.valueColor ?? palette.accent), labelDisplayUnits: 1 });
     objects.categoryLabels = props({ show: false });
   } else if (item.type === 'slicer') {
+    if (item.dropdown) objects.data = props({ mode: 'Dropdown' });
     objects.header = props({ show: false });
     objects.items = props({ fontFamily: font, textSize: 11, fontColor: fill(palette.ink) });
   } else {
@@ -47,7 +49,8 @@ function style(visual, item) {
     if (item.type === 'lineChart') {
       objects.lineStyles = props({ strokeWidth: 3, showMarker: true, markerSize: 5 });
     } else {
-      objects.labels = props({ show: true, fontSize: 10, labelPosition: 'OutsideEnd', color: fill(palette.ink) });
+      objects.labels = props({ show: true, fontSize: 10, labelPosition: 'OutsideEnd', color: fill(palette.ink),
+        ...(item.exactLabels && { labelDisplayUnits: 1 }) });
     }
   }
 }
@@ -74,35 +77,38 @@ function binding({ table, name }, kind) {
 export function addDashboard(pages, metadata, design, write) {
   const pageId = id();
   const folder = join(pages, pageId);
+  const retail = Boolean(design.retailOverview);
   mkdirSync(join(folder, 'visuals'), { recursive: true });
   write(join(folder, 'page.json'), {
     $schema: reportSchema + 'page/2.1.0/schema.json', name: pageId,
-    displayName: design.page, displayOption: 'FitToPage', width: 1280, height: 720,
+    displayName: design.page, displayOption: 'FitToPage', width: 1280, height: retail ? 600 : 720,
     objects: { background: props({ color: fill(palette.page), transparency: 0 }),
       outspace: props({ color: fill(palette.page), transparency: 0 }) },
   });
-  const retail = Boolean(design.retailOverview);
+  const slicer = {
+    type: 'slicer', title: retail ? 'Sales channel' : design.slicer.name, dropdown: retail,
+    rect: retail ? [974, 20, 286, 84] : [976, 172, 280, 524],
+    roles: { Values: [binding(design.slicer, 'Column')] },
+  };
   const visuals = design.cards.map((card, i) => ({
-    type: 'card', title: card.name, rect: [24 + i * 416, retail ? 132 : 24, 400, retail ? 111 : 128],
+    type: 'card', title: card.name, rect: retail ? [20 + i * 314, 120, 298, 102] : [24 + i * 416, 24, 400, 128],
+    valueColor: retail && i === 3 ? palette.blue : undefined,
     roles: { Values: [binding(card, 'Measure')] },
   }));
-  if (retail) visuals.unshift({ type: 'textbox', rect: [24, 24, 1232, 88], lines: [
-    ['Retail sales overview', 30, palette.white, 'bold'],
-    ['JAN-DEC 2025  |  SYNTHETIC RETAIL DATA', 12, palette.light, 'normal'],
-  ] });
+  if (retail) visuals.unshift({ type: 'textbox', rect: [20, 20, 938, 84], lines: [
+    ['Retail performance', 30, palette.white, 'bold'],
+    ['FY 2025  |  JAN-DEC  |  SYNTHETIC DATA', 12, palette.light, 'normal'],
+  ] }, slicer);
   visuals.push({
     type: design.chart === 'bar' ? 'barChart' : 'lineChart',
     title: retail ? 'Monthly revenue' : design.value.name + ' by ' + design.category.name,
-    rect: retail ? [24, 264, 806, 432] : [24, 172, 932, 524],
+    rect: retail ? [20, 238, 778, 342] : [24, 172, 932, 524],
     roles: { Category: [binding(design.category, 'Column')], Y: [binding(design.value, 'Measure')] },
     sort: design.chart === 'line' ? { field: binding(design.category, 'Column').field, direction: 'Ascending' } : undefined,
-  }, {
-    type: 'slicer', title: retail ? 'Sales channel' : design.slicer.name,
-    rect: retail ? [850, 264, 406, 134] : [976, 172, 280, 524],
-    roles: { Values: [binding(design.slicer, 'Column')] },
   });
+  if (!retail) visuals.push(slicer);
   if (retail) visuals.push({
-    type: 'barChart', title: 'Revenue by channel', rect: [850, 418, 406, 278],
+    type: 'barChart', title: 'Revenue by channel', rect: [814, 238, 446, 342], exactLabels: true,
     roles: { Category: [binding(design.slicer, 'Column')], Y: [binding(design.value, 'Measure')] },
     sort: { field: binding(design.value, 'Measure').field, direction: 'Descending' },
   });

@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "cf9589121351139820d4",
+  "name": "80aa227f4f24e3c66a18",
   "position": {
-    "x": 24,
-    "y": 264,
-    "width": 806,
-    "height": 432,
-    "z": 5,
-    "tabOrder": 5
+    "x": 974,
+    "y": 20,
+    "width": 286,
+    "height": 84,
+    "z": 2,
+    "tabOrder": 2
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "slicer",
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -23,52 +23,15 @@
                       "Entity": "Sales"
                     }
                   },
-                  "Property": "Month"
+                  "Property": "Channel"
                 }
               },
-              "queryRef": "Sales.Month",
-              "nativeQueryRef": "Month",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Sales"
-                    }
-                  },
-                  "Property": "Revenue"
-                }
-              },
-              "queryRef": "Sales.Revenue",
-              "nativeQueryRef": "Revenue",
+              "queryRef": "Sales.Channel",
+              "nativeQueryRef": "Channel",
               "active": true
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Sales"
-                  }
-                },
-                "Property": "Month"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
@@ -188,7 +151,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Monthly revenue'"
+                  "Value": "'Sales channel'"
                 }
               }
             },
@@ -243,117 +206,57 @@
       ]
     },
     "objects": {
-      "categoryAxis": [
+      "data": [
         {
           "properties": {
-            "showAxisTitle": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "header": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4C626A'"
-                    }
-                  }
-                }
-              }
             }
           }
         }
       ],
-      "valueAxis": [
+      "items": [
         {
           "properties": {
-            "showAxisTitle": {
+            "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Segoe UI'"
                 }
               }
             },
-            "fontSize": {
+            "textSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
-            "labelColor": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#4C626A'"
+                      "Value": "'#18282D'"
                     }
                   }
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D3E0DD'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "defaultColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#087F73'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "lineStyles": [
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "3D"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "markerSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "5D"
                 }
               }
             }

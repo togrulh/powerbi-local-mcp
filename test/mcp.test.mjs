@@ -26,7 +26,7 @@ test('an MCP client can create, inspect, author and validate the demo', { timeou
     const ref = name => ({ table: source.tables[0].name, name });
     const result = await call('create_dashboard', {
       source: 'RetailDemo', name: 'RetailReview', page: 'Channel review', chart: 'bar',
-      cards: source.tables[0].measures.map(ref), value: ref('Revenue'),
+      cards: ['Revenue', 'Orders', 'Average order value'].map(ref), value: ref('Revenue'),
       category: ref('Channel'), slicer: ref('Month'),
     });
     assert.equal(result.visuals.length, 5);

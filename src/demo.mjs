@@ -20,6 +20,11 @@ function retailModel() {
     { name: 'Revenue', expression: 'SUM(Sales[RevenueAmount])', formatString: '#,0' },
     { name: 'Orders', expression: 'SUM(Sales[OrderCount])', formatString: '#,0' },
     { name: 'Average order value', expression: 'DIVIDE([Revenue], [Orders])', formatString: '#,0.00' },
+    { name: 'Q4 vs Q3 revenue', formatString: '+0.0%;-0.0%;0.0%', expression: [
+      'VAR Q3Revenue = CALCULATE([Revenue], Sales[Month] IN {"2025-07", "2025-08", "2025-09"})',
+      'VAR Q4Revenue = CALCULATE([Revenue], Sales[Month] IN {"2025-10", "2025-11", "2025-12"})',
+      'RETURN DIVIDE(Q4Revenue - Q3Revenue, Q3Revenue)',
+    ] },
   ];
   const m = ['#table(type table [Month = text, Channel = text, OrderCount = Int64.Type, RevenueAmount = Int64.Type], {',
     ...salesRows().map((row, i, all) => '    {' + row.map(v => typeof v === 'string' ? JSON.stringify(v) : v).join(', ') +
@@ -63,7 +68,7 @@ export async function createDemo(root) {
     writeJson(join(model, 'model.bim'), retailModel());
     const ref = name => ({ table: 'Sales', name });
     return addDashboard(pages, { $schema: schema + 'definition/pagesMetadata/1.0.0/schema.json', pageOrder: [] }, {
-      page: 'Retail sales overview', cards: ['Revenue', 'Orders', 'Average order value'].map(ref),
+      page: 'Retail performance', cards: ['Revenue', 'Orders', 'Average order value', 'Q4 vs Q3 revenue'].map(ref),
       category: ref('Month'), value: ref('Revenue'), slicer: ref('Channel'), chart: 'line', retailOverview: true,
     }, writeJson);
   });

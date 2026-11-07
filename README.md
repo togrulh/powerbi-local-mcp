@@ -39,13 +39,13 @@ Running the same prompt again? Choose a different output name. The server will n
 
 ## Try the retail demo
 
-The retail template combines three KPI cards, a monthly revenue trend, and a channel comparison. The channel filter updates the whole page.
+The retail dashboard fits on one page: revenue, orders, average order value, and Q4 versus Q3 revenue growth sit above the monthly trend and ranked channel comparison. The dropdown in the header filters all six visuals.
 
-![Retail sales overview with all channels selected](docs/images/retail-overview.png)
+![Retail performance dashboard with all channels selected](docs/images/retail-overview.png)
 
-[View the Online-only screenshot](docs/images/retail-online.png). Selecting **Online** changes revenue to **114,312** and orders to **2,622**.
+[View the Online-only screenshot](docs/images/retail-online.png). Selecting **Online** changes revenue to **114,312**, orders to **2,622**, and quarterly revenue growth to **+22.2%**.
 
-Open [RetailDemo.pbip](examples/RetailDemo/RetailDemo.pbip) in a recent Power BI Desktop. On the first open, choose **Home > Refresh** to load the embedded sample. No database, account, or credentials are needed. The 36 fictional rows cover 12 months and three sales channels. The expected totals are **399,426 revenue**, **9,126 orders**, and **43.77 average order value**.
+Open [RetailDemo.pbip](examples/RetailDemo/RetailDemo.pbip) in a recent Power BI Desktop. On the first open, choose **Home > Refresh** to load the embedded sample. No database, account, or credentials are needed. The 36 fictional rows cover 12 months and three sales channels. With all channels selected, the dashboard shows **399,426 revenue**, **9,126 orders**, **43.77 average order value**, and **+19.4% Q4 versus Q3 revenue growth**.
 
 ## Connect another MCP client
 

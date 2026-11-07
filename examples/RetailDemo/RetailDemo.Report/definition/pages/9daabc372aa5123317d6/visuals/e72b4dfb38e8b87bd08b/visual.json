@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "0044083e985b91b04296",
+  "name": "e72b4dfb38e8b87bd08b",
   "position": {
-    "x": 440,
-    "y": 132,
-    "width": 400,
-    "height": 111,
+    "x": 20,
+    "y": 120,
+    "width": 298,
+    "height": 102,
     "z": 3,
     "tabOrder": 3
   },
@@ -23,11 +23,11 @@
                       "Entity": "Sales"
                     }
                   },
-                  "Property": "Orders"
+                  "Property": "Revenue"
                 }
               },
-              "queryRef": "Sales.Orders",
-              "nativeQueryRef": "Orders",
+              "queryRef": "Sales.Revenue",
+              "nativeQueryRef": "Revenue",
               "active": true
             }
           ]
@@ -151,7 +151,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Orders'"
+                  "Value": "'Revenue'"
                 }
               }
             },
